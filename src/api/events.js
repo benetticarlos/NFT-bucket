@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from '../config/config';
 
 export default async function getEvents(asset_contract_address, token_id) {
   const options = {
@@ -10,7 +11,7 @@ export default async function getEvents(asset_contract_address, token_id) {
     },
     headers: {
       Accept: 'application/json',
-      'X-API-KEY': process.env.OPENSEA_API_KEY,
+      'X-API-KEY': config.OPENSEA_API_KEY,
     },
   };
 
