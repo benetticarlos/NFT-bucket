@@ -15,7 +15,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { testApi } from '../api/test';
 import SimpleModal from './SimpleModal';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +65,7 @@ export default function Product({
           <Avatar
             aria-label="recipe"
             className={classes.avatar}
-            src={creator.profile_img_url}
+            src={creator?.profile_img_url}
           ></Avatar>
         }
         action={
@@ -74,7 +73,7 @@ export default function Product({
             <MoreVertIcon />
           </IconButton>
         }
-        title={creator.user.username}
+        title={creator?.user.username}
         subheader="September 14, 2016"
       />
 

@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import getEvents from '../api/events';
 import { FaEthereum } from 'react-icons/fa';
-
+import getAsset from '../api/getAsset';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -49,22 +42,21 @@ export default function ModalItem({ asset_contract, token_id }) {
   const classes = useStyles();
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchEvents() {
       try {
-        const response = await axios.get(
-          `https://api.opensea.io/api/v1/asset/${asset_contract.address}/${token_id}`
-        );
-        setData(response.data);
+        const response = await getAsset(asset_contract.address, token_id);
+        setData(response);
         const fetchedEvents = await getEvents(asset_contract.address, token_id);
+
         setEvents(fetchedEvents.asset_events);
       } catch (error) {
         console.log(error);
       }
     }
-    fetchData();
+    fetchEvents();
   }, []);
-  console.log('events :>> ', events);
-  return data ? (
+
+  return data && events ? (
     <div className={classes.root}>
       <Grid container spacing={2} width="100%">
         <Grid item sm={6} align-self="center">

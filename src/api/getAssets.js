@@ -1,22 +1,19 @@
 import axios from 'axios';
 
-export default async function getEvents(asset_contract_address, token_id) {
+export async function getAssets() {
   const options = {
     method: 'GET',
-    url: 'https://api.opensea.io/api/v1/events',
-    params: {
-      asset_contract_address: asset_contract_address.toString(),
-      token_id: token_id.toString(),
-    },
+    url: 'https://api.opensea.io/api/v1/assets?order_direction=desc&limit=20&include_orders=false',
+    params: { order_direction: 'desc', limit: '20', include_orders: 'false' },
     headers: {
       Accept: 'application/json',
       'X-API-KEY': process.env.OPENSEA_API_KEY,
     },
   };
-
   try {
     const response = await axios(options);
-    return response.data;
+
+    return response.data.assets;
   } catch (error) {
     console.log(error);
   }
